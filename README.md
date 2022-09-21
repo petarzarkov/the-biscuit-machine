@@ -49,4 +49,5 @@ npm start
 - push to gh-pages branch on merge to main
 
 ### Demo
+
 <a href="https://petarzarkov.github.io/the-biscuit-machine" target="_blank">Preview</a>
