@@ -50,4 +50,4 @@ npm start
 
 ### Demo
 
-<a href="http://petarzarkov.com/" target="_blank">Preview</a>
+<a href="https://petarzarkov.github.io/the-biscuit-machine" target="_blank">Preview</a>
