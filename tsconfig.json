@@ -17,6 +17,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
+      "@animations": ["./src/animations"],
       "@components": ["./src/components"],
       "@contracts": ["./src/contracts"],
       "@hooks": ["./src/hooks"],
