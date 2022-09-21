@@ -34,7 +34,7 @@ down leaving nothing on the conveyor belt.
 
 
 ### Tech Requirements
-- NodeJS >= 14.x.x
+- NodeJS >= 16.x.x
 
 ### Setup
 
