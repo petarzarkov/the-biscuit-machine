@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return {
+    base: "/the-biscuit-machine/",
     build: {
       emptyOutDir: true,
       rollupOptions: {
