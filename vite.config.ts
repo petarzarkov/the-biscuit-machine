@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
+        "@animations": path.resolve(__dirname, "./src/animations"),
         "@components": path.resolve(__dirname, "./src/components"),
         "@contracts": path.resolve(__dirname, "./src/contracts"),
         "@hooks": path.resolve(__dirname, "./src/hooks"),

@@ -48,6 +48,6 @@ npm start
 - build on push to any branch
 - push to gh-pages branch on merge to main
 
-### Demo
+### Play it here
 
-<a href="https://petarzarkov.github.io/the-biscuit-machine" target="_blank">Preview</a>
+<a href="https://petarzarkov.github.io/the-biscuit-machine" target="_blank">Open</a>
