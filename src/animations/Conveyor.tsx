@@ -2,7 +2,7 @@
 import React from "react";
 import { motion, MotionStyle } from "framer-motion";
 
-export const ConveyorCircle: React.FC<{ motionStyle?: MotionStyle }> = ({ motionStyle }) => {
+export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle }> = ({ motionStyle }) => {
     return (
         <motion.div
             style={{
@@ -11,15 +11,15 @@ export const ConveyorCircle: React.FC<{ motionStyle?: MotionStyle }> = ({ motion
                 ...motionStyle
             }}
             animate={{
-                rotate: [0, 180, 180]
+                rotate: 180
             }}
             transition={{
-                duration: 5,
-                ease: "easeInOut",
+                ease: "linear",
+                duration: 2,
                 repeat: Infinity
             }}
         >
-            <img src={"images/gear.png"} alt="image" />
+            <img src={"images/gear.png"} alt="gear" />
         </motion.div>
     );
 };
@@ -29,29 +29,29 @@ export const Conveyor = () => {
     return (
         <motion.div
             style={{
-                width: 600,
-                height: 200,
+                width: 400,
+                height: 400,
                 borderRadius: "50%",
                 border: "5px dashed green"
             }}
             animate={{
-                rotate: [0, 180, 180]
+                rotate: 180
             }}
             transition={{
-                duration: 5,
-                ease: "easeInOut",
+                ease: "linear",
+                duration: 2,
                 repeat: Infinity
             }}
         >
             <div>
-                <ConveyorCircle motionStyle={{
+                <ConveyorGear motionStyle={{
                     marginRight: "auto",
                     marginLeft: 0
                 }}/>
-                <ConveyorCircle motionStyle={{
+                <ConveyorGear motionStyle={{
                     margin: "auto"
                 }}/>
-                <ConveyorCircle motionStyle={{
+                <ConveyorGear motionStyle={{
                     marginLeft: "auto",
                     marginRight: 0
                 }}/>
