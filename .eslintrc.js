@@ -47,7 +47,7 @@ module.exports = {
         'prettier/prettier': 0,
         quotes: ["error", "double"],
         "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/indent": ["warn", 2],
+        "@typescript-eslint/indent": ["warn", 4],
         "@typescript-eslint/member-delimiter-style": [
             "warn",
             {

@@ -3,22 +3,22 @@ import { Expand } from "@contracts";
 import { ColorTheme } from "@theme";
 
 export type ContextSettings = {
-  theme: ColorTheme;
+    theme: ColorTheme;
 };
 
 export type ProviderBase = Expand<
 {
-  colors: Record<string, string>;
-  isLoading: boolean;
+    colors: Record<string, string>;
+    isLoading: boolean;
 } & ContextSettings
 >;
 
 export type ContextState = Expand<
 ProviderBase & {
-  setTheme: (theme: ColorTheme) => void;
+    setTheme: (theme: ColorTheme) => void;
 }
 >;
 
 export const Context = React.createContext<ContextState | undefined>(
-  undefined,
+    undefined,
 );
