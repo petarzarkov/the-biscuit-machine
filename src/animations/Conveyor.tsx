@@ -2,6 +2,7 @@
 import React from "react";
 import { HStack } from "@chakra-ui/react";
 import { motion, MotionStyle } from "framer-motion";
+import { struct } from "@config";
 
 export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle }> = ({ motionStyle }) => {
     return (
@@ -29,17 +30,7 @@ export const Conveyor = () => {
 
     return (
         <HStack>
-            <ConveyorGear motionStyle={{
-                marginRight: "auto",
-                marginLeft: 0
-            }}/>
-            <ConveyorGear motionStyle={{
-                margin: "auto"
-            }}/>
-            <ConveyorGear motionStyle={{
-                marginLeft: "auto",
-                marginRight: 0
-            }}/>
+            {[...Array(struct.numberOfGears).keys()].map(val => <ConveyorGear key={`CGear${val}`} />)}
         </HStack>
     );
 };
