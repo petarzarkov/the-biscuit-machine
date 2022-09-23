@@ -8,8 +8,6 @@ export const ConveyorCircle: React.FC<{ motionStyle?: MotionStyle }> = ({ motion
             style={{
                 width: 125,
                 height: 125,
-                borderRadius: "50%",
-                border: "5px dashed red",
                 ...motionStyle
             }}
             animate={{
@@ -20,7 +18,9 @@ export const ConveyorCircle: React.FC<{ motionStyle?: MotionStyle }> = ({ motion
                 ease: "easeInOut",
                 repeat: Infinity
             }}
-        />
+        >
+            <img src={"images/gear.png"} alt="image" />
+        </motion.div>
     );
 };
 
@@ -35,7 +35,7 @@ export const Conveyor = () => {
                 border: "5px dashed green"
             }}
             animate={{
-                rotate: [0, 180, 180, 0]
+                rotate: [0, 180, 180]
             }}
             transition={{
                 duration: 5,
