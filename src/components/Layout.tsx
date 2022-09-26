@@ -19,7 +19,7 @@ export const Layout: FC = () => {
                 justify="center"
                 minHeight={"84.6vh"}
             >
-                <Box borderRadius="md" p={4}>
+                <Box borderRadius="md" p={0}>
                     <Outlet />
                 </Box>
             </Flex>

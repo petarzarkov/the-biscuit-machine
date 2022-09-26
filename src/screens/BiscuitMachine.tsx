@@ -5,7 +5,7 @@ import { Conveyor } from "@animations";
 export const BiscuitMachine: FC = () => {
 
     return (
-        <Box>
+        <Box maxW={400}>
             <Conveyor />
         </Box>
     );
