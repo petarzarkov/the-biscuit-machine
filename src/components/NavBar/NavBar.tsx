@@ -85,7 +85,10 @@ export const NavBar: FC = () => {
                                     key={`${tt}-${indx}`}
                                     colorScheme={tt}
                                     bgColor={theme === tt ? useColorModeValue(`${tt}.300`, `${tt}.500`) : "transparent"}
-                                    onClick={() => setTheme(tt as ColorTheme)}
+                                    onClick={() => {
+                                        setTheme(tt as ColorTheme);
+                                        palOnClose();
+                                    }}
                                 >
                                     {tt}
                                 </Button>)}

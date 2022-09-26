@@ -43,6 +43,7 @@ export const NavLink: FC<{ children: ReactNode; icon: IconType; to?: string }> =
                         _groupHover={{
                             color: "white",
                         }}
+                        color={useColorModeValue("primary.700", "primary.200")}
                         as={icon}
                     />
                 )}
