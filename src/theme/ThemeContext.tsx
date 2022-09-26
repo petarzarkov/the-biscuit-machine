@@ -19,6 +19,6 @@ ProviderBase & {
 }
 >;
 
-export const Context = React.createContext<ContextState | undefined>(
+export const ThemeContext = React.createContext<ContextState | undefined>(
     undefined,
 );

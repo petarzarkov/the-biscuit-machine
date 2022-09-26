@@ -1,6 +1,6 @@
 import React from "react";
 import { storeData, getData } from "@store";
-import { ProviderBase, Context, ContextSettings } from "./ThemeContext";
+import { ProviderBase, ThemeContext, ContextSettings } from "./ThemeContext";
 import { themes, ColorTheme } from "@theme";
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -36,7 +36,7 @@ export class ThemeProvider extends React.Component<{ children: React.ReactNode }
 
     render() {
         return (
-            <Context.Provider
+            <ThemeContext.Provider
                 value={{
                     ...this.state,
                     setTheme: this.setTheme,
@@ -45,7 +45,7 @@ export class ThemeProvider extends React.Component<{ children: React.ReactNode }
                 <ChakraProvider theme={this.state.colors}>
                     {this.props.children}
                 </ChakraProvider>
-            </Context.Provider>
+            </ThemeContext.Provider>
         );
     }
 }
