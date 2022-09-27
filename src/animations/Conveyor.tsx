@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { HStack, Icon, useColorModeValue, Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { HStack, Icon, useColorModeValue, Box } from "@chakra-ui/react";
 import { motion, MotionStyle, useMotionValue } from "framer-motion";
 import { BsFillGearFill } from "react-icons/bs";
 import { GiCookie } from "react-icons/gi";
@@ -105,7 +105,6 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
 };
 
 export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
-    const { isStopped, setControls} = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
     const numberOfGearsMap = {
         260: 5,
@@ -125,23 +124,6 @@ export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
                 {[...Array(numberOfGearsMap[(w || 260) as keyof typeof numberOfGearsMap])
                     .keys()].map((val, _, arr) => <ConveyorGear key={`CGear${val}`} gearCount={arr.length} w={w || 260} />)}
             </HStack>
-
-            <ButtonGroup gap='4'>
-                <Button onClick={() => {
-                    if (isStopped) {
-                        setControls({
-                            isStopped: false
-                        });
-                    }
-                }}>Start</Button>
-                <Button onClick={() => {
-                    if (!isStopped) {
-                        setControls({
-                            isStopped: true
-                        });
-                    }
-                }}>Stop</Button>
-            </ButtonGroup>
         </Box>
     );
 };
