@@ -7,7 +7,7 @@ import { FaCookie } from "react-icons/fa";
 import { useAnimationProvider } from "@hooks";
 
 export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: number; w: number }> = ({ motionStyle, gearCount, w }) => {
-    const { controls } = useAnimationProvider();
+    const { isStopped } = useAnimationProvider();
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
         width: (w / gearCount),
@@ -22,17 +22,24 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
                 margin: -0.5,
                 ...motionStyle
             }}
-            animate={controls}
-            variants={{
-                conveyor: {
-                    rotate: 360,
-                    transition: {
-                        ease: "linear",
-                        duration: 2,
-                        repeat: Infinity
-                    }
+            animate={isStopped ? {} : {
+                rotate: 360,
+                transition: {
+                    ease: "linear",
+                    duration: 2,
+                    repeat: Infinity
                 }
             }}
+            // variants={{
+            //     conveyor: {
+            //         rotate: 360,
+            //         transition: {
+            //             ease: "linear",
+            //             duration: 2,
+            //             repeat: Infinity
+            //         }
+            //     }
+            // }}
         >
             <Icon as={BsFillGearFill}
                 color={iconColor}
@@ -45,7 +52,7 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
 };
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
-    const { controls } = useAnimationProvider();
+    const { isStopped } = useAnimationProvider();
     const xTrack = useMotionValue(x);
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
@@ -83,15 +90,12 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                 ...baseStyle,
                 ...motionStyle
             }}
-            animate={controls}
-            variants={{
-                cookie: {
-                    x: xTrack.get(),
-                    transition: {
-                        ease: "linear",
-                        duration: 2,
-                        repeat: Infinity
-                    }
+            animate={isStopped ? {} : {
+                x: xTrack.get(),
+                transition: {
+                    ease: "linear",
+                    duration: 2,
+                    repeat: Infinity
                 }
             }}
         >
@@ -101,8 +105,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
 };
 
 export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
-    const { controls } = useAnimationProvider();
-    const [isRunning, setRunning] = React.useState(false);
+    const { isStopped, setControls} = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
     const numberOfGearsMap = {
         260: 5,
@@ -122,24 +125,20 @@ export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
                 {[...Array(numberOfGearsMap[(w || 260) as keyof typeof numberOfGearsMap])
                     .keys()].map((val, _, arr) => <ConveyorGear key={`CGear${val}`} gearCount={arr.length} w={w || 260} />)}
             </HStack>
+
             <ButtonGroup gap='4'>
                 <Button onClick={() => {
-                    if (!isRunning) {
-                        void controls?.start("cookie");
-                        void controls?.start("conveyor");
-                        setRunning(true);
+                    if (isStopped) {
+                        setControls({
+                            isStopped: false
+                        });
                     }
                 }}>Start</Button>
                 <Button onClick={() => {
-                    if (isRunning) {
-                        controls?.stop();
-                        setRunning(false);
-                    }
-                }}>Pause</Button>
-                <Button onClick={() => {
-                    if (isRunning) {
-                        controls?.stop();
-                        setRunning(false);
+                    if (!isStopped) {
+                        setControls({
+                            isStopped: true
+                        });
                     }
                 }}>Stop</Button>
             </ButtonGroup>
