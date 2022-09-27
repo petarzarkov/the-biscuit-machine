@@ -22,14 +22,16 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
                 margin: -0.5,
                 ...motionStyle
             }}
-            animate={{
-                ...controls,
-                rotate: 360
-            }}
-            transition={{
-                ease: "linear",
-                duration: 2,
-                repeat: Infinity
+            animate={controls}
+            variants={{
+                conveyor: {
+                    rotate: 360,
+                    transition: {
+                        ease: "linear",
+                        duration: 2,
+                        repeat: Infinity
+                    }
+                }
             }}
         >
             <Icon as={BsFillGearFill}
@@ -81,14 +83,16 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                 ...baseStyle,
                 ...motionStyle
             }}
-            animate={{
-                ...controls,
-                x: xTrack.get()
-            }}
-            transition={{
-                ease: "linear",
-                duration: 2,
-                repeat: Infinity
+            animate={controls}
+            variants={{
+                cookie: {
+                    x: xTrack.get(),
+                    transition: {
+                        ease: "linear",
+                        duration: 2,
+                        repeat: Infinity
+                    }
+                }
             }}
         >
             {iconRef}
@@ -98,6 +102,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
 
 export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
     const { controls } = useAnimationProvider();
+    const [isRunning, setRunning] = React.useState(false);
     const color = useColorModeValue("primary.900", "primary.300");
     const numberOfGearsMap = {
         260: 5,
@@ -119,20 +124,23 @@ export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
             </HStack>
             <ButtonGroup gap='4'>
                 <Button onClick={() => {
-                    void controls?.start({
-                        rotate: 360,
-                        transition: {
-                            ease: "linear",
-                            duration: 2,
-                            repeat: Infinity
-                        }
-                    });
-                }}>Continue</Button>
+                    if (!isRunning) {
+                        void controls?.start("cookie");
+                        void controls?.start("conveyor");
+                        setRunning(true);
+                    }
+                }}>Start</Button>
                 <Button onClick={() => {
-                    controls?.stop();
+                    if (isRunning) {
+                        controls?.stop();
+                        setRunning(false);
+                    }
                 }}>Pause</Button>
                 <Button onClick={() => {
-                    controls?.stop();
+                    if (isRunning) {
+                        controls?.stop();
+                        setRunning(false);
+                    }
                 }}>Stop</Button>
             </ButtonGroup>
         </Box>

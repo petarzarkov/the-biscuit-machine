@@ -5,7 +5,7 @@ import { useAnimationControls } from "framer-motion";
 export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const animationControls = useAnimationControls();
     const [state, setControls] = React.useState<ProviderBase>({
-        controls: undefined
+        controls: animationControls
     });
 
     React.useEffect(() => {
@@ -14,10 +14,18 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         });
     }, []);
 
+    const restartControls = () => {
+        setControls({
+            controls: animationControls
+        });
+    };
+
     return (
         <AnimationContext.Provider
             value={{
-                ...state
+                ...state,
+                setControls: (controls) => setControls({ controls }),
+                restartControls
             }}
         >
             {children}
