@@ -6,7 +6,10 @@ export type ProviderBase = Expand<{
     controls: AnimationControls | undefined;
 }>;
 
-export type ContextState = Expand<ProviderBase>;
+export type ContextState = Expand<ProviderBase> & {
+    setControls: (controls: AnimationControls) => void;
+    restartControls: () => void;
+};
 
 export const AnimationContext = React.createContext<ContextState | undefined>(
     undefined,
