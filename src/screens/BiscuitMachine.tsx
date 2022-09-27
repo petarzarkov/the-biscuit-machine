@@ -1,6 +1,6 @@
 import React, { FC, LegacyRef } from "react";
 import { Box, IconButton, ButtonGroup, useColorModeValue } from "@chakra-ui/react";
-import { Conveyor } from "@animations";
+import { Conveyor, Cookie } from "@animations";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useAnimationProvider } from "@hooks";
 import { VscDebugStart, VscStopCircle } from "react-icons/vsc";
@@ -18,6 +18,7 @@ export const BiscuitMachine: FC = () => {
             ref={elementRef as unknown as LegacyRef<HTMLDivElement>}
             width={[260, 460, 660]}
         >
+            <Cookie x={dimensions?.width || 400} />
             <Conveyor w={dimensions?.width} />
 
             <Box m={5}>
