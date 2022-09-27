@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HStack, Icon, useColorModeValue, Box } from "@chakra-ui/react";
-import { motion, MotionStyle, useMotionValue } from "framer-motion";
+import { motion, MotionStyle } from "framer-motion";
 import { BsFillGearFill } from "react-icons/bs";
-import { GiCookie } from "react-icons/gi";
-import { FaCookie } from "react-icons/fa";
 import { useAnimationProvider } from "@hooks";
 
 export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: number; w: number }> = ({ motionStyle, gearCount, w }) => {
@@ -30,16 +28,6 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
                     repeat: Infinity
                 }
             }}
-            // variants={{
-            //     conveyor: {
-            //         rotate: 360,
-            //         transition: {
-            //             ease: "linear",
-            //             duration: 2,
-            //             repeat: Infinity
-            //         }
-            //     }
-            // }}
         >
             <Icon as={BsFillGearFill}
                 color={iconColor}
@@ -47,59 +35,6 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
                     ...baseStyle,
                     margin: 0
                 }}/>
-        </motion.div>
-    );
-};
-
-export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
-    const { isStopped } = useAnimationProvider();
-    const xTrack = useMotionValue(x);
-    const iconColor = useColorModeValue("primary.700", "primary.100");
-    const baseStyle = {
-        width: 25,
-        height: 25,
-        padding: 0,
-        margin: 0,
-    };
-
-    const getCookieIcon = (n: number) => {
-        return n >= x / 2 ?
-            <Icon as={FaCookie}
-                color={iconColor}
-                style={{
-                    ...baseStyle
-                }}
-            />
-            :
-            <Icon as={GiCookie}
-                color={iconColor}
-                style={{
-                    ...baseStyle
-                }}
-            />;
-    };
-
-    let iconRef = getCookieIcon(x);
-    useEffect(() => xTrack.onChange(latest => {
-        iconRef = getCookieIcon(latest);
-    }), [x]);
-
-    return (
-        <motion.div
-            style={{
-                ...baseStyle,
-                ...motionStyle
-            }}
-            animate={isStopped ? {} : {
-                x: xTrack.get(),
-                transition: {
-                    ease: "linear",
-                    duration: 2,
-                    repeat: Infinity
-                }
-            }}
-        >
-            {iconRef}
         </motion.div>
     );
 };
@@ -114,7 +49,6 @@ export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
 
     return (
         <Box>
-            <Cookie x={w || 400} />
             <HStack
                 p={0}
                 border="5px dashed black"
