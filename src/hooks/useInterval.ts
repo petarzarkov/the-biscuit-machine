@@ -16,9 +16,11 @@ export function useInterval(
         function tick() {
             void savedCallback?.current?.();
         }
+
         if (delay !== null) {
             const id = setInterval(tick, delay);
             return () => clearInterval(id);
         }
+
     }, [delay]);
 }

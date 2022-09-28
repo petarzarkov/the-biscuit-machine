@@ -2,12 +2,15 @@ import React from "react";
 import { AnimationProviderBase, AnimationContext } from "./AnimationContext";
 
 export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [state, setControls] = React.useState<AnimationProviderBase>({
-        isStopped: false
+    const [state, setState] = React.useState<AnimationProviderBase>({
+        isStopped: true,
+        isPaused: false,
+        duration: 2
     });
 
     React.useEffect(() => {
-        setControls({
+        return setState({
+            ...state,
             isStopped: true
         });
     }, []);
@@ -16,7 +19,12 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         <AnimationContext.Provider
             value={{
                 ...state,
-                setControls
+                setControls: (c) => {
+                    setState({
+                        ...state,
+                        ...c
+                    });
+                }
             }}
         >
             {children}

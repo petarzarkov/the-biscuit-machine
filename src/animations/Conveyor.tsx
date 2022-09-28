@@ -5,7 +5,7 @@ import { BsFillGearFill } from "react-icons/bs";
 import { useAnimationProvider } from "@hooks";
 
 export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: number; w: number }> = ({ motionStyle, gearCount, w }) => {
-    const { isStopped } = useAnimationProvider();
+    const { isStopped, duration } = useAnimationProvider();
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
         width: (w / gearCount),
@@ -24,7 +24,7 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
                 rotate: 360,
                 transition: {
                     ease: "linear",
-                    duration: 2,
+                    duration,
                     repeat: Infinity
                 }
             }}
