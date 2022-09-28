@@ -5,6 +5,12 @@ import { motion } from "framer-motion";
 
 export const Oven: React.FC<{ x: number }> = ({ x }) => {
     const { isStopped, duration } = useAnimationProvider();
+    // [260, 460, 660]
+    const xAxisMap: Record<number, number> = {
+        260: 40,
+        460: 200,
+        660: 360
+    };
 
     return (
         <Box
@@ -14,7 +20,7 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
             style={{
                 padding: 0,
                 margin: 0,
-                x: x - 300,
+                x: xAxisMap[x],
                 y: 70
             }}
             animate={isStopped ? {} : {

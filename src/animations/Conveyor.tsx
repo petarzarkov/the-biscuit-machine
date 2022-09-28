@@ -41,7 +41,7 @@ export const ConveyorGear: React.FC<{ motionStyle?: MotionStyle; gearCount: numb
 
 export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
     const color = useColorModeValue("primary.900", "primary.300");
-    const numberOfGearsMap = {
+    const numberOfGearsMap: Record<number, number> = {
         260: 5,
         460: 10,
         660: 15
@@ -55,7 +55,7 @@ export const Conveyor: React.FC<{ w?: number }> = ({ w }) => {
                 borderRadius={25}
                 borderColor={color}
             >
-                {[...Array(numberOfGearsMap[(w || 260) as keyof typeof numberOfGearsMap])
+                {[...Array(numberOfGearsMap[(w || 260)])
                     .keys()].map((val, _, arr) => <ConveyorGear key={`CGear${val}`} gearCount={arr.length} w={w || 260} />)}
             </HStack>
         </Box>
