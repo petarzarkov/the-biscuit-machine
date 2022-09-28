@@ -26,7 +26,7 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
             }}
         >
             <Image
-                src={"/images/oven.png"}
+                src={"images/oven.png"}
                 style={{
                     padding: 0,
                     margin: 0,
