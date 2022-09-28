@@ -30,7 +30,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                 ...baseStyle,
                 ...motionStyle,
                 x: 0,
-                y: 80
+                y: 90
             }}
             animate={isStopped ? {} : {
                 x,

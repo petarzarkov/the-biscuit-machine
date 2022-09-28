@@ -9,8 +9,8 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
     return (
         <Box
             as={motion.div}
-            width={[200, 200, 200]}
-            height={[200, 200, 200]}
+            width={200}
+            height={200}
             style={{
                 padding: 0,
                 margin: 0,

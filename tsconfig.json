@@ -23,7 +23,8 @@
       "@hooks": ["./src/hooks"],
       "@screens": ["./src/screens"],
       "@config": ["./src/config"],
-      "@theme": ["./src/theme"],
+      "@theme": ["src/providers/theme"],
+      "@animation": ["src/providers/animation"],
       "@store": ["./src/store"],
     }
   },
