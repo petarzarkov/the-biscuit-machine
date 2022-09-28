@@ -5,23 +5,22 @@ import { motion } from "framer-motion";
 
 export const Oven: React.FC<{ x: number }> = ({ x }) => {
     const { isStopped, duration } = useAnimationProvider();
-    // [260, 460, 660]
     const xAxisMap: Record<number, number> = {
-        260: 40,
-        460: 200,
-        660: 360
+        260: 135,
+        460: 280,
+        660: 400
     };
 
     return (
         <Box
             as={motion.div}
-            width={200}
-            height={200}
+            width={[130, 150, 180]}
+            height={[140, 170, 200]}
             style={{
+                position: "absolute",
                 padding: 0,
                 margin: 0,
-                x: xAxisMap[x],
-                y: 70
+                x: xAxisMap[x]
             }}
             animate={isStopped ? {} : {
                 transition: {

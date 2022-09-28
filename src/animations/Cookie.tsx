@@ -1,12 +1,13 @@
 import React from "react";
 import { useColorModeValue, Icon, HStack } from "@chakra-ui/react";
 import { useAnimationProvider } from "@hooks";
-import { MotionStyle, motion } from "framer-motion";
-import { FaCookie } from "react-icons/fa";
+import { MotionStyle, motion, AnimatePresence } from "framer-motion";
 import { GiCookie } from "react-icons/gi";
+import { SiAiqfome } from "react-icons/si";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
     const { isStopped, duration } = useAnimationProvider();
+    const [isDoughComplete, setIsDoughComplete] = React.useState(false);
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
         width: 25,
@@ -16,7 +17,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
     };
 
     const getCookieIcon = (isStamped: boolean) => {
-        return <Icon as={isStamped ? GiCookie : FaCookie}
+        return <Icon as={isStamped ? GiCookie : SiAiqfome}
             color={iconColor}
             style={{
                 ...baseStyle
@@ -26,45 +27,61 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
 
     return (
         <HStack>
-            <motion.div
-                style={{
-                    ...baseStyle,
-                    ...motionStyle,
-                    x: 0,
-                    y: 90
-                }}
-                animate={isStopped ? {} : {
-                    x: x / 2,
-                    rotate: 360,
-                    transition: {
-                        ease: "linear",
-                        duration,
-                        repeat: Infinity
-                    }
-                }}
-            >
-                {getCookieIcon(false)}
-            </motion.div>
-            <motion.div
-                style={{
-                    ...baseStyle,
-                    ...motionStyle,
-                    x: x / 2,
-                    y: 90
-                }}
-                animate={isStopped ? {} : {
-                    x,
-                    rotate: 360,
-                    transition: {
-                        ease: "linear",
-                        duration,
-                        delay: duration,
-                        repeat: Infinity
-                    }
-                }}
-            >
-                {getCookieIcon(true)}
-            </motion.div>
+            <AnimatePresence mode="wait">
+                {!isDoughComplete ?
+                    <motion.div
+                        key="dough"
+                        style={{
+                            ...baseStyle,
+                            ...motionStyle,
+                            x: 15,
+                        }}
+                        animate={isStopped ? {} : {
+                            x: x / 2,
+                            rotate: 360,
+                            transition: {
+                                ease: "linear",
+                                duration,
+                                repeatDelay: 1,
+                                repeat: Infinity
+                            }
+                        }}
+                        onUpdate={(latest) => {
+                            if (latest.x >= x / 2 && !isStopped) {
+                                setIsDoughComplete(true);
+                            }
+                        }}
+                    >
+                        {getCookieIcon(false)}
+                    </motion.div>
+                    :
+                    <motion.div
+                        key="rawCookie"
+                        style={{
+                            ...baseStyle,
+                            ...motionStyle,
+                            x: x / 2
+                        }}
+                        animate={isStopped ? {} : {
+                            x: x,
+                            rotate: 360,
+                            transition: {
+                                ease: "linear",
+                                duration,
+                                delay: 1,
+                                repeat: Infinity
+                            }
+                        }}
+                        onUpdate={(latest) => {
+                            if (latest.x >= x || isStopped) {
+                                setIsDoughComplete(false);
+                            }
+                        }}
+                    >
+                        {getCookieIcon(true)}
+                    </motion.div>
+                }
+            </AnimatePresence>
         </HStack>
     );
 };
