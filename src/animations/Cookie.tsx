@@ -29,7 +29,8 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
             style={{
                 ...baseStyle,
                 ...motionStyle,
-                x: 0
+                x: 0,
+                y: 80
             }}
             animate={isStopped ? {} : {
                 x,
