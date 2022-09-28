@@ -35,7 +35,8 @@ export default defineConfig(({ mode }) => {
                 "@hooks": path.resolve(__dirname, "./src/hooks"),
                 "@screens": path.resolve(__dirname, "./src/screens"),
                 "@config": path.resolve(__dirname, "./src/config"),
-                "@theme": path.resolve(__dirname, "./src/theme"),
+                "@theme": path.resolve(__dirname, "./src/providers/theme"),
+                "@animation": path.resolve(__dirname, "./src/providers/animation"),
                 "@store": path.resolve(__dirname, "./src/store"),
             }
         },

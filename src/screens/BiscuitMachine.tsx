@@ -45,6 +45,24 @@ export const BiscuitMachine: FC = () => {
                             <VscDebugStart size="28px" />
                         }
                     />
+                    {/* <IconButton
+                        aria-label="btnPause"
+                        title="pause"
+                        onClick={() => {
+                            if (!isPaused && !isStopped) {
+                                setControls({
+                                    isPaused: true
+                                });
+                            }
+                        }}
+                        size="lg"
+                        isRound
+                        disabled={!isPaused && isStopped}
+                        variant={isPaused ? "solid" : "outline"}
+                        icon={
+                            <AiOutlinePauseCircle size="28px" />
+                        }
+                    /> */}
                     <IconButton
                         aria-label="btnStop"
                         title="stop"
