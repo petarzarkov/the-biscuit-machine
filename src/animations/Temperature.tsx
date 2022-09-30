@@ -5,21 +5,22 @@ import { TbTemperatureCelsius } from "react-icons/tb";
 import { FaTemperatureHigh, FaTemperatureLow } from "react-icons/fa";
 
 export const Temperature: React.FC = () => {
-    const { temperature } = useAnimationProvider();
+    const { temperature, heatedTemp } = useAnimationProvider();
     const iconColor = useColorModeValue("primary.700", "primary.100");
 
+    const color = temperature >= heatedTemp ? "orange.400" : iconColor;
     return (
         <HStack>
-            <Icon as={temperature >= 200 ? FaTemperatureHigh : FaTemperatureLow}
-                color={iconColor}
+            <Icon as={temperature >= heatedTemp ? FaTemperatureHigh : FaTemperatureLow}
+                color={color}
                 p={0}
                 m={0}
             />
-            <Tag size={"md"} key={"temperatureDisplay"} variant='outline' color={iconColor}>
+            <Tag size={"md"} key={"temperatureDisplay"} variant='outline' color={color}>
                 <TagLabel>{temperature}</TagLabel>
                 <TagRightIcon
                     as={TbTemperatureCelsius}
-                    color={iconColor}
+                    color={color}
                     p={0}
                     m={0}
                 />

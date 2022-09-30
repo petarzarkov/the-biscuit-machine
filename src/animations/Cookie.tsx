@@ -16,6 +16,13 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
         margin: 0,
     };
 
+    React.useEffect(() => {
+        if (isStopped && isDoughComplete) {
+            setIsDoughComplete(false);
+        }
+
+    }, [isStopped]);
+
     const getCookieIcon = (isStamped: boolean) => {
         return <Icon as={isStamped ? GiCookie : SiAiqfome}
             color={iconColor}
@@ -35,6 +42,9 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             ...baseStyle,
                             ...motionStyle,
                             x: 15,
+                            ...isStopped && {
+                                visibility: "hidden"
+                            }
                         }}
                         animate={isStopped ? {} : isHeated && {
                             x: x / 2,
@@ -60,7 +70,10 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: x / 2
+                            x: x / 2,
+                            ...isStopped && {
+                                visibility: "hidden"
+                            }
                         }}
                         animate={isStopped ? {} : isHeated && {
                             x: x,

@@ -15,8 +15,8 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
     return (
         <Box
             as={motion.div}
-            width={[130, 150, 180]}
-            height={[140, 170, 200]}
+            width={[100, 150, 180]}
+            height={[170, 190, 190]}
             style={{
                 position: "absolute",
                 padding: 0,
@@ -31,6 +31,7 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
                 }
             }}
         >
+            <Temperature />
             <Image
                 as={motion.img}
                 src={"images/oven.png"}
@@ -47,7 +48,6 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
                     }
                 }}
             />
-            <Temperature />
         </Box>
     );
 };
