@@ -1,5 +1,5 @@
 import React, { FC, LegacyRef } from "react";
-import { Box, IconButton, ButtonGroup, useColorModeValue, HStack } from "@chakra-ui/react";
+import { Box, IconButton, ButtonGroup, useColorModeValue, HStack, Image } from "@chakra-ui/react";
 import { Conveyor, Cookie, Oven } from "@animations";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useAnimationProvider } from "@hooks";
@@ -9,8 +9,17 @@ export const BiscuitMachine: FC = () => {
     const elementRef = React.useRef<LegacyRef<HTMLDivElement>>();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const dimensions = useSize(elementRef as unknown as HTMLDivElement | null);
-    const { isStopped, setControls } = useAnimationProvider();
+    const { isStopped, setControls, isExploded, setIsExploded } = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
+
+    React.useEffect(() => {
+        if (isExploded) {
+            void new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
+                setIsExploded(false);
+            });
+        }
+
+    }, [isExploded]);
 
     return (
         <Box
@@ -18,12 +27,23 @@ export const BiscuitMachine: FC = () => {
             ref={elementRef as unknown as LegacyRef<HTMLDivElement>}
             width={[260, 460, 660]}
         >
-            <HStack p={0} m={0}>
-                <Cookie x={dimensions?.width || 400} />
-                <Oven x={dimensions?.width || 400} />
-            </HStack>
 
-            <Conveyor w={dimensions?.width} />
+            {
+                isExploded ?
+                    <Image
+                        src="images/explosion.gif"
+                        borderRadius={20}
+                    />
+                    :
+                    <div>
+                        <HStack p={0} m={0}>
+                            <Cookie x={dimensions?.width || 400} />
+                            <Oven x={dimensions?.width || 400} />
+                        </HStack>
+
+                        <Conveyor w={dimensions?.width} />
+                    </div>
+            }
 
             <Box m={5}>
                 <ButtonGroup gap='4' color={color}>
