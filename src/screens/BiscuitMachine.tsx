@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box, IconButton, ButtonGroup, useColorModeValue, HStack } from "@chakra-ui/react";
+import { Box, IconButton, ButtonGroup, useColorModeValue, HStack, Image } from "@chakra-ui/react";
 import { Conveyor, Cookie, Oven } from "@animations";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useAnimationProvider } from "@hooks";
@@ -85,6 +85,15 @@ export const BiscuitMachine: FC = () => {
                             <VscStopCircle size="28px" />
                         }
                     />
+                    {temperature >= 250 && <Image
+                        src={"images/itsHot.webp"}
+                        w={50}
+                        h={50}
+                        style={{
+                            padding: 0,
+                            margin: 0,
+                        }}
+                    />}
                 </ButtonGroup>
             </Box>
         </Box>

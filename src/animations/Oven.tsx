@@ -25,7 +25,7 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
         <Box
             as={motion.div}
             width={[100, 150, 180]}
-            height={[170, 190, 190]}
+            height={[150, 170, 170]}
             style={{
                 position: "absolute",
                 padding: 0,

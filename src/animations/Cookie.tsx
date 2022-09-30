@@ -1,9 +1,8 @@
 import React from "react";
-import { useColorModeValue, Icon, HStack } from "@chakra-ui/react";
+import { useColorModeValue, Icon, HStack, Image } from "@chakra-ui/react";
 import { useAnimationProvider } from "@hooks";
 import { MotionStyle, motion, AnimatePresence } from "framer-motion";
 import { GiCookie } from "react-icons/gi";
-import { SiAiqfome } from "react-icons/si";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
     const { isRunning, duration, isHeated, isPaused } = useAnimationProvider();
@@ -11,8 +10,8 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
     const [pausedAt, setPausedAt] = React.useState(15);
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
-        width: 25,
-        height: 25,
+        width: 50,
+        height: 50,
         padding: 0,
         margin: 0,
     };
@@ -23,15 +22,6 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
         }
 
     }, [isRunning]);
-
-    const getCookieIcon = (isStamped: boolean) => {
-        return <Icon as={isStamped ? GiCookie : SiAiqfome}
-            color={iconColor}
-            style={{
-                ...baseStyle
-            }}
-        />;
-    };
 
     return (
         <HStack>
@@ -49,7 +39,6 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         }}
                         animate={!isRunning || isPaused ? {} : isHeated && {
                             x: x / 2,
-                            rotate: 360,
                             transition: {
                                 ease: "linear",
                                 duration,
@@ -66,7 +55,13 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                     >
-                        {getCookieIcon(false)}
+                        <Image
+                            src={"images/jumpyDough.webp"}
+                            style={{
+                                padding: 0,
+                                margin: 0
+                            }}
+                        />
                     </motion.div>
                     :
                     <motion.div
@@ -99,7 +94,12 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                     >
-                        {getCookieIcon(true)}
+                        <Icon as={GiCookie}
+                            color={iconColor}
+                            style={{
+                                ...baseStyle
+                            }}
+                        />
                     </motion.div>
                 }
             </AnimatePresence>
