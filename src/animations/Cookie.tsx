@@ -6,7 +6,7 @@ import { GiCookie } from "react-icons/gi";
 import { SiAiqfome } from "react-icons/si";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
-    const { isStopped, duration } = useAnimationProvider();
+    const { isStopped, duration, isHeated } = useAnimationProvider();
     const [isDoughComplete, setIsDoughComplete] = React.useState(false);
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
@@ -36,7 +36,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             ...motionStyle,
                             x: 15,
                         }}
-                        animate={isStopped ? {} : {
+                        animate={isStopped ? {} : isHeated && {
                             x: x / 2,
                             rotate: 360,
                             transition: {
@@ -62,7 +62,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             ...motionStyle,
                             x: x / 2
                         }}
-                        animate={isStopped ? {} : {
+                        animate={isStopped ? {} : isHeated && {
                             x: x,
                             rotate: 360,
                             transition: {

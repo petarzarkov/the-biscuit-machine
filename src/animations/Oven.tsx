@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Box } from "@chakra-ui/react";
 import { useAnimationProvider } from "@hooks";
 import { motion } from "framer-motion";
+import { Temperature } from "./Temperature";
 
 export const Oven: React.FC<{ x: number }> = ({ x }) => {
     const { isStopped, duration } = useAnimationProvider();
@@ -46,6 +47,7 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
                     }
                 }}
             />
+            <Temperature />
         </Box>
     );
 };
