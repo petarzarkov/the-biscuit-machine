@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ImportMetaEnv {
-    readonly NUMBER_OF_GEARS: string;
+    readonly EXPLODE_TEMP: string;
 }
 
 interface ImportMeta {

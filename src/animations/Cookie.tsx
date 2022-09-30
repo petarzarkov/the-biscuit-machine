@@ -6,8 +6,9 @@ import { GiCookie } from "react-icons/gi";
 import { SiAiqfome } from "react-icons/si";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
-    const { isStopped, duration, isHeated } = useAnimationProvider();
+    const { isRunning, duration, isHeated, isPaused } = useAnimationProvider();
     const [isDoughComplete, setIsDoughComplete] = React.useState(false);
+    const [pausedAt, setPausedAt] = React.useState(15);
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
         width: 25,
@@ -17,11 +18,11 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
     };
 
     React.useEffect(() => {
-        if (isStopped && isDoughComplete) {
+        if (!isRunning && isDoughComplete) {
             setIsDoughComplete(false);
         }
 
-    }, [isStopped]);
+    }, [isRunning]);
 
     const getCookieIcon = (isStamped: boolean) => {
         return <Icon as={isStamped ? GiCookie : SiAiqfome}
@@ -41,12 +42,12 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: 15,
-                            ...isStopped && {
+                            x: isPaused ? pausedAt : 15,
+                            ...!isRunning && {
                                 visibility: "hidden"
                             }
                         }}
-                        animate={isStopped ? {} : isHeated && {
+                        animate={!isRunning || isPaused ? {} : isHeated && {
                             x: x / 2,
                             rotate: 360,
                             transition: {
@@ -57,7 +58,10 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                         onUpdate={(latest) => {
-                            if (latest.x >= x / 2 && !isStopped) {
+                            if (!isPaused) {
+                                setPausedAt(latest.x as number);
+                            }
+                            if (latest.x >= x / 2 && isRunning) {
                                 setIsDoughComplete(true);
                             }
                         }}
@@ -70,12 +74,12 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: x / 2,
-                            ...isStopped && {
+                            x: isPaused ? pausedAt : x / 2,
+                            ...!isRunning && {
                                 visibility: "hidden"
                             }
                         }}
-                        animate={isStopped ? {} : isHeated && {
+                        animate={!isRunning || isPaused ? {} : isHeated && {
                             x: x,
                             rotate: 360,
                             transition: {
@@ -86,7 +90,11 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                         onUpdate={(latest) => {
-                            if (latest.x >= x || isStopped) {
+                            if (!isPaused) {
+                                setPausedAt(latest.x as number);
+                            }
+
+                            if (latest.x >= x || !isRunning) {
                                 setIsDoughComplete(false);
                             }
                         }}
