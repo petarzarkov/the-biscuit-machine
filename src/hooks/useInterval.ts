@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useInterval(
     callback: () => Promise<void> | void,
     delay = 2000,
 ) {
+    const [isStarted, toggleInterval] = useState(false);
     const savedCallback = useRef<typeof callback | undefined>();
-
+    let id: NodeJS.Timer | undefined;
     // Remember the latest callback.
     useEffect(() => {
         savedCallback.current = callback;
@@ -17,10 +18,17 @@ export function useInterval(
             void savedCallback?.current?.();
         }
 
-        if (delay !== null) {
-            const id = setInterval(tick, delay);
-            return () => clearInterval(id);
+        if (!isStarted && id) {
+            clearInterval(id);
         }
 
-    }, [delay]);
+        if (delay !== null && isStarted) {
+            id = setInterval(tick, delay);
+            return () => clearInterval(id);
+        }
+    }, [delay, isStarted]);
+
+    return {
+        toggleInterval
+    };
 }

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Box, IconButton, ButtonGroup, useColorModeValue, HStack, Image } from "@chakra-ui/react";
-import { Conveyor, Cookie, Oven, Stamper } from "@animations";
+import { Conveyor, Cookie, Extruder, Oven, Stamper } from "@animations";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useAnimationProvider } from "@hooks";
 import { VscDebugStart, VscStopCircle } from "react-icons/vsc";
@@ -8,19 +8,28 @@ import { AiOutlinePauseCircle } from "react-icons/ai";
 import { temp } from "@config";
 
 export const BiscuitMachine: FC = () => {
-    const elementRef = React.useRef<HTMLDivElement>(null);
+    const elementRef = React.useRef(null);
     const dimensions = useSize(elementRef);
     const { isRunning, setControls, isPaused, toggleTemperature, temperature } = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
+    // const [cookiesNumber, setCookiesNumber] = React.useState(0);
 
     return (
         <Box
             ref={elementRef}
             width={[260, 460, 660]}
         >
-            <Stamper x={dimensions?.width || 400} />
+            <HStack>
+                <Extruder />
+                <Stamper x={dimensions?.width || 400} />
+            </HStack>
             <HStack p={0} m={0}>
                 <Cookie x={dimensions?.width || 400} />
+                {/* {cookiesNumber > 0 ?
+                    [...Array(cookiesNumber).keys()].map(v => (<Cookie key={`Cookie${v}`} x={dimensions?.width || 400} />))
+                    :
+                    <Box w={50} h={50} />
+                } */}
                 <Oven x={dimensions?.width || 400} />
             </HStack>
 

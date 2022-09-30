@@ -13,6 +13,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         heatedTemp: temp.heatedTemp,
         explodeTemp: temp.explodeTemp
     });
+    const [isStamping, setIsStamping] = React.useState(false);
     const [isHeated, setIsHeated] = React.useState(false);
     const [isExploded, setIsExploded] = React.useState(false);
 
@@ -29,6 +30,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         if (state.isPaused) {
             toggleIncrement(-originalIncrement);
         }
+
     }, [state.isPaused]);
 
     React.useEffect(() => {
@@ -77,7 +79,9 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 setTemperature: setIteration,
                 toggleTemperature: toggleIncrement,
                 isExploded,
-                setIsExploded
+                setIsExploded,
+                isStamping,
+                setIsStamping
             }}
         >
             {children}
