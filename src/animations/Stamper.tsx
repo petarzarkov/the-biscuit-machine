@@ -5,7 +5,8 @@ import { useAnimationProvider } from "@hooks";
 
 // I really cannot draw
 export const Stamper: React.FC<{ x: number }> = ({ x }) => {
-    const { isRunning, duration, isPaused, isHeated } = useAnimationProvider();
+    const { isRunning, isStamping, isPaused, setIsStamping } = useAnimationProvider();
+    const [pausedAt, setPausedAt] = React.useState(0);
 
     return (
         <motion.div
@@ -14,16 +15,27 @@ export const Stamper: React.FC<{ x: number }> = ({ x }) => {
                 margin: 0,
                 width: 50,
                 height: 50,
-                marginLeft: x / 2
+                marginLeft: (x / 3) - 50,
+                y: isPaused ? pausedAt : 0
             }}
-            animate={!isRunning || isPaused ? {} : isHeated && {
+            animate={!isRunning || isPaused ? {} : isStamping ? {
                 y: 50,
                 transition: {
-                    skewY: 50,
-                    ease: "linear",
-                    duration,
-                    repeat: Infinity
+                    ease: "linear"
                 }
+            } : {
+                y: 0,
+                transition: {
+                    ease: "linear"
+                }
+            }}
+            onUpdate={(latest) => {
+                if (!isPaused) {
+                    setPausedAt(latest.y as number);
+                }
+            }}
+            onAnimationComplete={() => {
+                setIsStamping(false);
             }}
         >
             <Image

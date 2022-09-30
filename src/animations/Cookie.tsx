@@ -5,9 +5,10 @@ import { MotionStyle, motion, AnimatePresence } from "framer-motion";
 import { GiCookie } from "react-icons/gi";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
-    const { isRunning, duration, isHeated, isPaused } = useAnimationProvider();
+    const defaultX = 15;
+    const { isRunning, duration, isHeated, isPaused, setIsStamping } = useAnimationProvider();
     const [isDoughComplete, setIsDoughComplete] = React.useState(false);
-    const [pausedAt, setPausedAt] = React.useState(15);
+    const [pausedAt, setPausedAt] = React.useState(defaultX);
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
         width: 50,
@@ -32,7 +33,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: isPaused ? pausedAt : 15,
+                            x: isPaused ? pausedAt : defaultX,
                             ...!isRunning && {
                                 visibility: "hidden"
                             }
@@ -50,7 +51,12 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             if (!isPaused) {
                                 setPausedAt(latest.x as number);
                             }
-                            if (latest.x >= x / 2 && isRunning) {
+                            // Magic number 30, don't touch
+                            if (latest.x >= (x / 3) - 30 && isRunning) {
+                                setIsStamping(true);
+                            }
+
+                            if (latest.x >= x / 3 && isRunning) {
                                 setIsDoughComplete(true);
                             }
                         }}
@@ -69,7 +75,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: isPaused ? pausedAt : x / 2,
+                            x: isPaused ? pausedAt : x / 3,
                             ...!isRunning && {
                                 visibility: "hidden"
                             }
