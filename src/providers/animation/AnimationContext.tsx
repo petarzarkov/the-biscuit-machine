@@ -2,7 +2,7 @@ import React from "react";
 import { Expand } from "@contracts";
 
 export type AnimationProviderBase = Expand<{
-    isStopped: boolean;
+    isRunning: boolean;
     isPaused: boolean;
     duration: number;
     initialTemp: number;
@@ -15,6 +15,7 @@ export type AnimationContextState = Expand<AnimationProviderBase> & {
     isHeated: boolean;
     temperature: number;
     setTemperature: (newTemperature: number) => void;
+    toggleTemperature: (incremenet: number) => void;
     isExploded: boolean;
     setIsExploded: (c: boolean) => void;
 };

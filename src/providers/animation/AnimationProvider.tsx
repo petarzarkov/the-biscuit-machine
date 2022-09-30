@@ -1,3 +1,4 @@
+import { temp } from "@config";
 import { useIteration } from "@hooks";
 import React from "react";
 import { AnimationProviderBase, AnimationContext } from "./AnimationContext";
@@ -5,32 +6,42 @@ import { AnimationProviderBase, AnimationContext } from "./AnimationContext";
 export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const originalIncrement = 0.05;
     const [state, setState] = React.useState<AnimationProviderBase>({
-        isStopped: true,
+        isRunning: false,
         isPaused: false,
         duration: 2,
-        initialTemp: 200,
-        heatedTemp: 220,
-        explodeTemp: 260
+        initialTemp: temp.initialTemp,
+        heatedTemp: temp.heatedTemp,
+        explodeTemp: temp.explodeTemp
     });
     const [isHeated, setIsHeated] = React.useState(false);
     const [isExploded, setIsExploded] = React.useState(false);
 
     const { iteration, setIteration, toggleIteration, toggleIncrement } = useIteration(state.initialTemp, originalIncrement);
     React.useEffect(() => {
-        if (!state.isStopped) {
+        if (state.isRunning) {
             toggleIncrement(originalIncrement);
             toggleIteration(true);
         }
 
-    }, [state.isStopped, toggleIteration]);
+    }, [state.isRunning, toggleIteration]);
+
+    React.useEffect(() => {
+        if (state.isPaused) {
+            toggleIncrement(-originalIncrement);
+        }
+    }, [state.isPaused]);
 
     React.useEffect(() => {
         if (iteration >= state.heatedTemp) {
             setIsHeated(true);
-            toggleIncrement(0.01);
+            if (!state.isPaused) {
+                toggleIncrement(0.01);
+            }
+        } else {
+            setIsHeated(false);
         }
 
-        if (state.isStopped) {
+        if (!state.isRunning) {
             setIsHeated(false);
             setIteration(state.initialTemp);
             toggleIteration(false);
@@ -42,12 +53,14 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             toggleIteration(false);
             setState({
                 ...state,
-                isStopped: true,
+                isRunning: false,
+                isPaused: false
             });
             setIsExploded(true);
+
         }
 
-    }, [state.isStopped, iteration]);
+    }, [state.isRunning, state.isPaused, iteration]);
 
     return (
         <AnimationContext.Provider
@@ -62,6 +75,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 isHeated,
                 temperature: Math.round(iteration),
                 setTemperature: setIteration,
+                toggleTemperature: toggleIncrement,
                 isExploded,
                 setIsExploded
             }}
