@@ -41,13 +41,6 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }, [state.isRunning, toggleIteration]);
 
     React.useEffect(() => {
-        if (state.isPaused) {
-            toggleIncrement(-originalIncrement);
-        }
-
-    }, [state.isPaused]);
-
-    React.useEffect(() => {
         if (iteration >= state.heatedTemp) {
             dispatch({
                 isHeated: true
@@ -55,10 +48,17 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             if (!state.isPaused) {
                 toggleIncrement(heatedIncrement);
             }
+
+            if (iteration >= (temp.heatedTemp + temp.explodeTemp) / 2 ) {
+                toggleIncrement(-heatedIncrement);
+            }
         } else {
             dispatch({
                 isHeated: false
             });
+            if (state.isPaused) {
+                toggleIncrement(heatedIncrement);
+            }
         }
 
         if (!state.isRunning) {
