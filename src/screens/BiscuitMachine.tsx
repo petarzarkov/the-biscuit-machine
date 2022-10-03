@@ -7,18 +7,36 @@ import { VscDebugStart, VscStopCircle } from "react-icons/vsc";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { temp } from "@config";
 import { GiCookie } from "react-icons/gi";
+import { BaseModal } from "@components";
 
 export const BiscuitMachine: FC = () => {
     const elementRef = React.useRef(null);
     const dimensions = useSize(elementRef);
-    const { isRunning, setControls, isPaused, toggleTemperature, temperature, score, highScore } = useAnimationProvider();
+    const { isRunning, setControls, isPaused, toggleTemperature, temperature, score, highScore, isExploded } = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
+    const [showModal, setShowModal] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!showModal && isExploded) {
+            setShowModal(true);
+        }
+
+    }, [isExploded]);
 
     return (
         <Box
             ref={elementRef}
             width={[200, 460, 660]}
         >
+            {showModal &&
+            <BaseModal
+                content={`Try not to reach ${temp.explodeTemp} degrees. Pausing will help you to reduce the oven's temperature.`}
+                title={`Game Over, score: ${score}`}
+                isOpen={showModal}
+                onClose={() => {
+                    setShowModal(false);
+                }} />
+            }
             {temperature >= 250 && <Image
                 pos={"absolute"}
                 src={"images/itsHot.webp"}
