@@ -1,18 +1,18 @@
 import React, { FC } from "react";
-import { Box, IconButton, ButtonGroup, useColorModeValue, HStack, Image } from "@chakra-ui/react";
+import { Box, IconButton, ButtonGroup, useColorModeValue, HStack, Image, Tag, TagLabel, TagLeftIcon } from "@chakra-ui/react";
 import { Conveyor, Cookie, Extruder, Motor, Oven, Stamper } from "@animations";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useAnimationProvider } from "@hooks";
 import { VscDebugStart, VscStopCircle } from "react-icons/vsc";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { temp } from "@config";
+import { GiCookie } from "react-icons/gi";
 
 export const BiscuitMachine: FC = () => {
     const elementRef = React.useRef(null);
     const dimensions = useSize(elementRef);
-    const { isRunning, setControls, isPaused, toggleTemperature, temperature } = useAnimationProvider();
+    const { isRunning, setControls, isPaused, toggleTemperature, temperature, score, highScore } = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
-    // const [cookiesNumber, setCookiesNumber] = React.useState(0);
 
     return (
         <Box
@@ -25,11 +25,6 @@ export const BiscuitMachine: FC = () => {
             </HStack>
             <HStack p={0} m={0}>
                 <Cookie x={dimensions?.width || 400} />
-                {/* {cookiesNumber > 0 ?
-                    [...Array(cookiesNumber).keys()].map(v => (<Cookie key={`Cookie${v}`} x={dimensions?.width || 400} />))
-                    :
-                    <Box w={50} h={50} />
-                } */}
                 <Oven x={dimensions?.width || 400} />
             </HStack>
 
@@ -38,7 +33,7 @@ export const BiscuitMachine: FC = () => {
                 <Conveyor w={dimensions?.width} />
             </HStack>
 
-            <Box m={5}>
+            <Box m={5} width={"50%"} margin={"0 auto"} p={5}>
                 <ButtonGroup gap='4' color={color}>
                     <IconButton
                         aria-label="btnStart"
@@ -85,7 +80,8 @@ export const BiscuitMachine: FC = () => {
                             if (isRunning) {
                                 setControls({
                                     isRunning: false,
-                                    isPaused: false
+                                    isPaused: false,
+                                    score: 0
                                 });
                             }
                         }}
@@ -108,6 +104,28 @@ export const BiscuitMachine: FC = () => {
                     />}
                 </ButtonGroup>
             </Box>
+            <HStack>
+                <Tag key={"score"} variant='subtle' color={color}>
+                    <TagLabel>{`Score: ${score}`}</TagLabel>
+                    <TagLeftIcon
+                        as={GiCookie}
+                        color={color}
+                        p={0}
+                        m={0}
+                        ml={1}
+                    />
+                </Tag>
+                <Tag key={"highScore"} variant='subtle' color={color}>
+                    <TagLabel>{`HighScore: ${highScore}`}</TagLabel>
+                    <TagLeftIcon
+                        as={GiCookie}
+                        color={color}
+                        p={0}
+                        m={0}
+                        ml={1}
+                    />
+                </Tag>
+            </HStack>
         </Box>
     );
 };

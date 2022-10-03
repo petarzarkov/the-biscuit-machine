@@ -1,10 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useAnimationProvider, useInterval } from "@hooks";
 
 // I really cannot draw
-export const Extruder: React.FC<{ toggleCookie?: (n: number) => void }> = ({ toggleCookie }) => {
-    const { isRunning, duration, isPaused, isHeated } = useAnimationProvider();
+export const Extruder: React.FC = () => {
+    const { isRunning, isPaused, isHeated, setControls, isExtruding } = useAnimationProvider();
     const [b, setB] = React.useState(1);
 
     const { toggleInterval } = useInterval(() => {
@@ -14,12 +14,10 @@ export const Extruder: React.FC<{ toggleCookie?: (n: number) => void }> = ({ tog
         }
 
         if (b !== 4) setB(b + 1);
-    }, (duration * 1000) / 4);
+    }, 200);
 
     React.useEffect(() => {
         if (isRunning && isHeated) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            toggleCookie && toggleCookie(b);
             if (b !== 4) setB(b + 1);
             toggleInterval(true);
         }
@@ -35,25 +33,33 @@ export const Extruder: React.FC<{ toggleCookie?: (n: number) => void }> = ({ tog
 
     }, [isRunning, isHeated, isPaused]);
 
+    React.useEffect(() => {
+        if (b === 4) {
+            setControls({
+                isExtruding: false
+            });
+        }
+    }, [b]);
+
     return (
-        <motion.img
-            src={`images/extruder${b}.png`}
-            style={{
-                padding: 0,
-                margin: 0,
-                width: 50,
-                height: 50,
-                x: 15
-            }}
-            animate={!isRunning || isPaused ? {} : isHeated && {
-                filter: "hue-rotate(360deg)",
-                transition: {
-                    ease: "linear",
-                    duration: duration,
-                    repeat: Infinity
-                }
-            }}
-        >
-        </motion.img>
+        <AnimatePresence>
+            <motion.img
+                src={isExtruding ? `images/extruder${b}.png` : "images/extruder1.png"}
+                style={{
+                    padding: 0,
+                    margin: 0,
+                    width: 50,
+                    height: 50,
+                    x: 15
+                }}
+                animate={!isRunning || isPaused ? {} : isHeated && isExtruding && {
+                    filter: "hue-rotate(360deg)",
+                    transition: {
+                        ease: "linear",
+                        repeat: Infinity
+                    }
+                }}
+            />
+        </AnimatePresence>
     );
 };

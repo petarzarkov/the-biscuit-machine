@@ -9,9 +9,11 @@ export type AnimationProviderBase = Expand<{
     heatedTemp: number;
     explodeTemp: number;
     isStamping: boolean;
+    isExtruding: boolean;
     isHeated: boolean;
     isExploded: boolean;
     score: number;
+    highScore: number;
 }>;
 
 export type AnimationContextState = Expand<AnimationProviderBase> & {

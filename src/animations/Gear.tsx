@@ -11,7 +11,7 @@ export const Gear: React.FC<{ motionStyle?: MotionStyle; gearCount?: number; w: 
     const baseStyle = {
         width: gearCount ? (w / gearCount) : 44,
         height: gearCount ? (w / gearCount) : 44,
-        padding: 0,
+        padding: 0
     };
 
     return (
