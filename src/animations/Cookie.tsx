@@ -1,13 +1,14 @@
 import React from "react";
-import { useColorModeValue, Icon, HStack, Image } from "@chakra-ui/react";
+import { useColorModeValue, Icon, HStack, Image, Text } from "@chakra-ui/react";
 import { useAnimationProvider } from "@hooks";
 import { MotionStyle, motion, AnimatePresence } from "framer-motion";
 import { GiCookie } from "react-icons/gi";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
     const defaultX = 15;
-    const { isRunning, duration, isHeated, isPaused, setControls } = useAnimationProvider();
+    const { isRunning, duration, isHeated, isPaused, setControls, score } = useAnimationProvider();
     const [isDoughComplete, setIsDoughComplete] = React.useState(false);
+    const [showScore, setShowScore] = React.useState(false);
     const [pausedAt, setPausedAt] = React.useState({
         one: defaultX,
         two: defaultX
@@ -53,6 +54,10 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                         onUpdate={(latest) => {
+                            if (latest.x > 0 && showScore) {
+                                setShowScore(false);
+                            }
+
                             if (!isPaused) {
                                 setPausedAt({
                                     ...pausedAt,
@@ -116,6 +121,13 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                                 setIsDoughComplete(false);
                                 setIsBaking(false);
                             }
+
+                            if (latest.x === x) {
+                                setControls({
+                                    score: score + 1
+                                });
+                                setShowScore(true);
+                            }
                         }}
                     >
 
@@ -138,6 +150,26 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
 
                     </motion.div>
                 }
+                {showScore &&
+                                <motion.div
+                                    key="scoreOne"
+                                    style={{
+                                        ...baseStyle,
+                                        ...motionStyle,
+                                        x: x
+                                    }}
+                                    animate={{
+                                        transition: {
+                                            ease: "linear",
+                                            duration,
+                                            repeat: Infinity
+                                        }
+                                    }}
+                                >
+                                    <Text color={iconColor}>{"+1"}</Text>
+                                </motion.div>
+                }
+
             </AnimatePresence>
         </HStack>
     );

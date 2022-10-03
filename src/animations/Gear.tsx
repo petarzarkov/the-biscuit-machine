@@ -25,7 +25,7 @@ export const Gear: React.FC<{ motionStyle?: MotionStyle; gearCount?: number; w: 
                 rotate: 360,
                 transition: {
                     ease: "linear",
-                    repeatDelay: 1,
+                    repeatDelay: 0.2,
                     duration,
                     repeat: Infinity
                 }
