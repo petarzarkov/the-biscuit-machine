@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Temperature } from "./Temperature";
 
 export const Oven: React.FC<{ x: number }> = ({ x }) => {
-    const { isRunning, duration, isExploded, setIsExploded, isPaused } = useAnimationProvider();
+    const { isRunning, duration, isExploded, setControls, isPaused } = useAnimationProvider();
     const xAxisMap: Record<number, number> = {
         260: 135,
         460: 280,
@@ -15,7 +15,9 @@ export const Oven: React.FC<{ x: number }> = ({ x }) => {
     React.useEffect(() => {
         if (isExploded) {
             void new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
-                setIsExploded(false);
+                setControls({
+                    isExploded: false
+                });
             });
         }
 

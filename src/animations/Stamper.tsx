@@ -5,7 +5,7 @@ import { useAnimationProvider } from "@hooks";
 
 // I really cannot draw
 export const Stamper: React.FC<{ x: number }> = ({ x }) => {
-    const { isRunning, isStamping, isPaused, setIsStamping } = useAnimationProvider();
+    const { isRunning, isStamping, isPaused, setControls } = useAnimationProvider();
     const [pausedAt, setPausedAt] = React.useState(0);
 
     return (
@@ -35,11 +35,15 @@ export const Stamper: React.FC<{ x: number }> = ({ x }) => {
                         setPausedAt(latest.y as number);
                     }
                     if (latest.y as number >= 50 && isStamping) {
-                        setIsStamping(false);
+                        setControls({
+                            isStamping: false
+                        });
                     }
                 }}
                 onAnimationComplete={() => {
-                    setIsStamping(false);
+                    setControls({
+                        isStamping: false
+                    });
                 }}
             >
                 <Image
