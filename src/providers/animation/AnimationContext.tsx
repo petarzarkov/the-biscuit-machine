@@ -14,6 +14,7 @@ export type AnimationProviderBase = Expand<{
     isExploded: boolean;
     score: number;
     highScore: number;
+    temperature: number;
 }>;
 
 export type AnimationContextState = Expand<AnimationProviderBase> & {

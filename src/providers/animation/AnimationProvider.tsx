@@ -22,7 +22,8 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         isHeated: false,
         isExploded: false,
         score: 0,
-        highScore: 0
+        highScore: 0,
+        temperature: temp.initialTemp
     };
 
     const [state, dispatch] = React.useReducer<(state: AnimationProviderBase, updates: Partial<AnimationProviderBase>) => AnimationProviderBase>(
@@ -70,7 +71,8 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     React.useEffect(() => {
         if (iteration >= state.heatedTemp) {
             dispatch({
-                isHeated: true
+                isHeated: true,
+                temperature: Math.round(iteration)
             });
             if (!state.isPaused) {
                 toggleIncrement(heatedIncrement);
@@ -81,7 +83,8 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             }
         } else {
             dispatch({
-                isHeated: false
+                isHeated: false,
+                temperature: Math.round(iteration)
             });
             if (state.isPaused) {
                 toggleIncrement(heatedIncrement);
@@ -90,7 +93,8 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
         if (!state.isRunning) {
             dispatch({
-                isHeated: false
+                isHeated: false,
+                temperature: state.initialTemp
             });
             setIteration(state.initialTemp);
             toggleIteration(false);
@@ -103,7 +107,8 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 isHeated: false,
                 isRunning: false,
                 isPaused: false,
-                isExploded: true
+                isExploded: true,
+                temperature: state.initialTemp
             });
 
         }
@@ -115,7 +120,6 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             value={{
                 ...state,
                 setControls: dispatch,
-                temperature: Math.round(iteration),
                 setTemperature: setIteration,
                 toggleTemperature: toggleIncrement
             }}
