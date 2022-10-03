@@ -13,14 +13,14 @@ export const Extruder: React.FC<{ toggleCookie?: (n: number) => void }> = ({ tog
             return;
         }
 
-        setB(b + 1);
+        if (b !== 4) setB(b + 1);
     }, (duration * 1000) / 4);
 
     React.useEffect(() => {
         if (isRunning && isHeated) {
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             toggleCookie && toggleCookie(b);
-            setB(b + 1);
+            if (b !== 4) setB(b + 1);
             toggleInterval(true);
         }
 

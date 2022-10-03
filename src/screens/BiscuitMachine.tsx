@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Box, IconButton, ButtonGroup, useColorModeValue, HStack, Image } from "@chakra-ui/react";
-import { Conveyor, Cookie, Extruder, Oven, Stamper } from "@animations";
+import { Conveyor, Cookie, Extruder, Motor, Oven, Stamper } from "@animations";
 import { useSize } from "@chakra-ui/react-use-size";
 import { useAnimationProvider } from "@hooks";
 import { VscDebugStart, VscStopCircle } from "react-icons/vsc";
@@ -33,7 +33,10 @@ export const BiscuitMachine: FC = () => {
                 <Oven x={dimensions?.width || 400} />
             </HStack>
 
-            <Conveyor w={dimensions?.width} />
+            <HStack>
+                <Motor />
+                <Conveyor w={dimensions?.width} />
+            </HStack>
 
             <Box m={5}>
                 <ButtonGroup gap='4' color={color}>
