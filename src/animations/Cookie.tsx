@@ -1,5 +1,5 @@
 import React from "react";
-import { useColorModeValue, Icon, HStack, Image, Text } from "@chakra-ui/react";
+import { useColorModeValue, Icon, HStack, Image, Tag, TagLabel, TagRightIcon } from "@chakra-ui/react";
 import { useAnimationProvider } from "@hooks";
 import { MotionStyle, motion, AnimatePresence } from "framer-motion";
 import { GiCookie } from "react-icons/gi";
@@ -22,13 +22,19 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
     };
 
     const [isBaking, setIsBaking] = React.useState(false);
-
+    const xPercent = x / 10;
     React.useEffect(() => {
         if (!isRunning && isDoughComplete) {
             setIsDoughComplete(false);
         }
 
     }, [isRunning]);
+
+    React.useEffect(() => {
+        setControls({
+            isExtruding: true
+        });
+    }, []);
 
     return (
         <HStack>
@@ -54,10 +60,6 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                         onUpdate={(latest) => {
-                            if (latest.x > 0 && showScore) {
-                                setShowScore(false);
-                            }
-
                             if (!isPaused) {
                                 setPausedAt({
                                     ...pausedAt,
@@ -96,7 +98,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                         }}
                         animate={!isRunning || isPaused ? {} : isHeated && {
-                            x: x,
+                            x: x - xPercent,
                             rotate: 360,
                             transition: {
                                 ease: "linear",
@@ -117,12 +119,16 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                                 setIsBaking(true);
                             }
 
-                            if (latest.x >= x || !isRunning) {
+                            if (latest.x >= (x - xPercent) || !isRunning) {
                                 setIsDoughComplete(false);
                                 setIsBaking(false);
+
+                                setControls({
+                                    isExtruding: true
+                                });
                             }
 
-                            if (latest.x === x) {
+                            if (latest.x >= (x - xPercent)) {
                                 setControls({
                                     score: score + 1
                                 });
@@ -150,27 +156,43 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
 
                     </motion.div>
                 }
-                {showScore &&
+            </AnimatePresence>
+            {showScore &&
                                 <motion.div
                                     key="scoreOne"
                                     style={{
                                         ...baseStyle,
                                         ...motionStyle,
-                                        x: x
+                                        x: x - xPercent
                                     }}
                                     animate={{
+                                        x,
+                                        rotate: 360,
+                                        y: 50,
                                         transition: {
                                             ease: "linear",
-                                            duration,
-                                            repeat: Infinity
+                                            duration: duration / 2,
+                                        }
+                                    }}
+                                    onUpdate={(latest) => {
+                                        if (latest.x as number >= x) {
+                                            setShowScore(false);
                                         }
                                     }}
                                 >
-                                    <Text color={iconColor}>{"+1"}</Text>
-                                </motion.div>
-                }
 
-            </AnimatePresence>
+                                    <Tag size={"md"} key={"scoreOneTag"} variant='subtle' color={iconColor}>
+                                        <TagLabel>{"+1"}</TagLabel>
+                                        <TagRightIcon
+                                            as={GiCookie}
+                                            color={iconColor}
+                                            p={0}
+                                            m={0}
+                                        />
+                                    </Tag>
+                                </motion.div>
+            }
+
         </HStack>
     );
 };
