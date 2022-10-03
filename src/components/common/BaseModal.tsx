@@ -1,23 +1,25 @@
 import React, { FC, ReactElement } from "react";
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useColorModeValue } from "@chakra-ui/react";
 
 export const BaseModal: FC<{ content: ReactElement | string; title: string; isOpen: boolean; onClose: () => void }> =
 ({ content, title, isOpen, onClose }) => {
+    const color = useColorModeValue("primary.900", "primary.300");
+    const colorInverse = useColorModeValue("primary.300", "primary.900");
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={"inside"} motionPreset={"slideInRight"} size="xs">
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>{title}</ModalHeader>
+                    <ModalHeader
+                        backgroundColor={colorInverse}
+                    >{title}</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody>
+                    <ModalBody backgroundColor={color}>
                         {content}
                     </ModalBody>
 
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
-                Close
-                        </Button>
+                    <ModalFooter backgroundColor={colorInverse}>
+                        <Button mr={3} onClick={onClose} color={color}>{"Close"}</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
