@@ -23,7 +23,7 @@ export const useIteration = (initial = 0, increment = 0.1) => {
             cancelAnimationFrame(raf);
         };
 
-    }, [isStarted, inc]);
+    }, [isStarted, inc, setI, requestAnimationFrame, toggleIncrement]);
 
     return {
         iteration: i,

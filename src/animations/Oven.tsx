@@ -7,7 +7,7 @@ import { Temperature } from "./Temperature";
 export const Oven: React.FC<{ x: number }> = ({ x }) => {
     const { isRunning, duration, isExploded, setControls, isPaused } = useAnimationProvider();
     const xAxisMap: Record<number, number> = {
-        260: 135,
+        200: 115,
         460: 280,
         660: 400
     };

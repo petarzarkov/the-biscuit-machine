@@ -19,7 +19,13 @@ export const Stamper: React.FC<{ x: number }> = ({ x }) => {
                     marginLeft: (x / 3) - 50,
                     y: isPaused ? pausedAt : 0
                 }}
-                animate={!isRunning || isPaused ? {} : isStamping ? {
+                animate={!isRunning || isPaused ? {
+                    rotate: [-1, 1.3, -1.5, 1, -0.5, 0, 1, -1.4, 0],
+                    transition: {
+                        repeatDelay: 0.2,
+                        repeat: Infinity
+                    }
+                } : isStamping ? {
                     y: 50,
                     transition: {
                         ease: "linear"
@@ -48,7 +54,7 @@ export const Stamper: React.FC<{ x: number }> = ({ x }) => {
                 }}
             >
                 <Image
-                    src={"images/stamper.png"}
+                    src={"images/anvil.png"}
                     style={{
                         padding: 0,
                         margin: 0
