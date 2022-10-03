@@ -34,6 +34,7 @@ export const Stamper: React.FC<{ x: number }> = ({ x }) => {
                     if (!isPaused && isRunning) {
                         setPausedAt(latest.y as number);
                     }
+                    // Needs to be here because onAnimationComplete does not trigger on android
                     if (latest.y as number >= 50 && isStamping) {
                         setControls({
                             isStamping: false

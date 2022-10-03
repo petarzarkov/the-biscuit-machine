@@ -8,7 +8,8 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         originalIncrement: 0.05,
         heatedIncrement: 0.01
     };
-    const [initialState, setState] = React.useState<AnimationProviderBase>({
+
+    const initialState: AnimationProviderBase = {
         isRunning: false,
         isPaused: false,
         duration: 2,
@@ -18,11 +19,11 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         isStamping: false,
         isHeated: false,
         isExploded: false,
-    });
+        score: 0
+    };
 
     const [state, dispatch] = React.useReducer<(state: AnimationProviderBase, updates: Partial<AnimationProviderBase>) => AnimationProviderBase>(
         (state, updates) => {
-            setState(state);
             return {
                 ...state,
                 ...updates
