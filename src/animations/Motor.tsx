@@ -35,7 +35,7 @@ export const Motor: React.FC<{ w?: number }> = ({ w }) => {
                     mt={[4, 0, 0]}
                 />
             </motion.div>
-            <Gear key={"Motor"} w={w || 260} icon={GiBigGear} />
+            <Gear key={"Motor"} w={w || 200} icon={GiBigGear} />
         </Box>
     );
 };

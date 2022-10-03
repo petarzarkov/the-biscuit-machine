@@ -17,8 +17,20 @@ export const BiscuitMachine: FC = () => {
     return (
         <Box
             ref={elementRef}
-            width={[260, 460, 660]}
+            width={[200, 460, 660]}
         >
+            {temperature >= 250 && <Image
+                pos={"absolute"}
+                src={"images/itsHot.webp"}
+                w={50}
+                h={50}
+                style={{
+                    padding: 0,
+                    margin: 0,
+                    marginLeft: 100,
+                    marginTop: -50
+                }}
+            />}
             <HStack>
                 <Extruder />
                 <Stamper x={dimensions?.width || 400} />
@@ -33,7 +45,7 @@ export const BiscuitMachine: FC = () => {
                 <Conveyor w={dimensions?.width} />
             </HStack>
 
-            <Box m={5} width={"50%"} margin={"0 auto"} p={5}>
+            <Box m={5}>
                 <ButtonGroup gap='4' color={color}>
                     <IconButton
                         aria-label="btnStart"
@@ -93,19 +105,10 @@ export const BiscuitMachine: FC = () => {
                             <VscStopCircle size="28px" />
                         }
                     />
-                    {temperature >= 250 && <Image
-                        src={"images/itsHot.webp"}
-                        w={50}
-                        h={50}
-                        style={{
-                            padding: 0,
-                            margin: 0,
-                        }}
-                    />}
                 </ButtonGroup>
             </Box>
-            <HStack>
-                <Tag key={"score"} variant='subtle' color={color}>
+            <Box>
+                <Tag size={"sm"} key={"score"} variant='subtle' color={color}>
                     <TagLabel>{`Score: ${score}`}</TagLabel>
                     <TagLeftIcon
                         as={GiCookie}
@@ -115,8 +118,8 @@ export const BiscuitMachine: FC = () => {
                         ml={1}
                     />
                 </Tag>
-                <Tag key={"highScore"} variant='subtle' color={color}>
-                    <TagLabel>{`HighScore: ${highScore}`}</TagLabel>
+                <Tag size={"sm"} key={"highScore"} variant='subtle' color={color} float={"right"} >
+                    <TagLabel>{`Highest: ${highScore}`}</TagLabel>
                     <TagLeftIcon
                         as={GiCookie}
                         color={color}
@@ -125,7 +128,7 @@ export const BiscuitMachine: FC = () => {
                         ml={1}
                     />
                 </Tag>
-            </HStack>
+            </Box>
         </Box>
     );
 };
