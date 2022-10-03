@@ -8,7 +8,10 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
     const defaultX = 15;
     const { isRunning, duration, isHeated, isPaused, setControls } = useAnimationProvider();
     const [isDoughComplete, setIsDoughComplete] = React.useState(false);
-    const [pausedAt, setPausedAt] = React.useState(defaultX);
+    const [pausedAt, setPausedAt] = React.useState({
+        one: defaultX,
+        two: defaultX
+    });
     const iconColor = useColorModeValue("primary.700", "primary.100");
     const baseStyle = {
         width: 50,
@@ -16,6 +19,8 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
         padding: 0,
         margin: 0,
     };
+
+    const [isBaking, setIsBaking] = React.useState(false);
 
     React.useEffect(() => {
         if (!isRunning && isDoughComplete) {
@@ -33,7 +38,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: isPaused ? pausedAt : defaultX,
+                            x: isPaused ? pausedAt.one : defaultX,
                             ...!isRunning && {
                                 visibility: "hidden"
                             }
@@ -49,7 +54,10 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         }}
                         onUpdate={(latest) => {
                             if (!isPaused) {
-                                setPausedAt(latest.x as number);
+                                setPausedAt({
+                                    ...pausedAt,
+                                    one: latest.x as number,
+                                });
                             }
                             // Magic number 30, don't touch
                             if (latest.x >= (x / 3) - 30 && isRunning) {
@@ -77,7 +85,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         style={{
                             ...baseStyle,
                             ...motionStyle,
-                            x: isPaused ? pausedAt : x / 3,
+                            x: isPaused ? pausedAt.two : x / 3,
                             ...!isRunning && {
                                 visibility: "hidden"
                             }
@@ -94,20 +102,40 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                         }}
                         onUpdate={(latest) => {
                             if (!isPaused) {
-                                setPausedAt(latest.x as number);
+                                setPausedAt({
+                                    ...pausedAt,
+                                    two: latest.x as number
+                                });
+                            }
+
+                            if (latest.x >= x / 1.5) {
+                                setIsBaking(true);
                             }
 
                             if (latest.x >= x || !isRunning) {
                                 setIsDoughComplete(false);
+                                setIsBaking(false);
                             }
                         }}
                     >
-                        <Icon as={GiCookie}
-                            color={iconColor}
-                            style={{
-                                ...baseStyle
-                            }}
-                        />
+
+                        {
+                            isBaking ?
+                                <Image
+                                    src={"images/cookieBaked.png"}
+                                    style={{
+                                        ...baseStyle
+                                    }}
+                                />
+                                :
+                                <Icon as={GiCookie}
+                                    color={iconColor}
+                                    style={{
+                                        ...baseStyle
+                                    }}
+                                />
+                        }
+
                     </motion.div>
                 }
             </AnimatePresence>

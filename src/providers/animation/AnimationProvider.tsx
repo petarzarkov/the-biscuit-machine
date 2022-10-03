@@ -49,7 +49,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 toggleIncrement(heatedIncrement);
             }
 
-            if (iteration >= (temp.heatedTemp + temp.explodeTemp) / 2 ) {
+            if (iteration >= (temp.heatedTemp + temp.explodeTemp) / 2 && state.isPaused) {
                 toggleIncrement(-heatedIncrement);
             }
         } else {
