@@ -10,6 +10,9 @@
   <a href="https://www.typescriptlang.org/" target="blank"><img title="Typescript" alt="TypeScript" width="26px" src="https://www.typescriptlang.org/favicon-32x32.png?v=8944a05a8b601855de116c8a56d3b3ae" /></a>
 </p>
 
+## Responsiveness
+- supports large, mid, small screens, including mobile
+
 ## Requirements
 Design a system to control a Biscuit Machine to the 
 following specification:
