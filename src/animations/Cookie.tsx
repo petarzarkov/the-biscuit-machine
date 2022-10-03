@@ -21,6 +21,8 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
         margin: 0,
     };
 
+    const [skewY, setSkewY] = React.useState(0);
+
     const [isBaking, setIsBaking] = React.useState(false);
     const xPercent = x / 10;
     React.useEffect(() => {
@@ -67,13 +69,14 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                                 });
                             }
                             // Magic number 30, don't touch
-                            if (latest.x >= (x / 3) - 30 && isRunning) {
+                            if (latest.x >= (x / 3) - 30 && isRunning && skewY !== 52) {
                                 setControls({
                                     isStamping: true
                                 });
+                                setSkewY(52);
                             }
 
-                            if (latest.x >= x / 3 && isRunning) {
+                            if (latest.x >= x / 3 && isRunning && !isDoughComplete) {
                                 setIsDoughComplete(true);
                             }
                         }}
@@ -95,7 +98,8 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             x: isPaused ? pausedAt.two : x / 3,
                             ...!isRunning && {
                                 visibility: "hidden"
-                            }
+                            },
+                            skewY: skewY,
                         }}
                         animate={!isRunning || isPaused ? {} : isHeated && {
                             x: x - xPercent,
@@ -115,11 +119,14 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                                 });
                             }
 
-                            if (latest.x >= x / 1.5) {
+                            if (latest.x >= x / 2.2 && skewY !== 0) {
+                                setSkewY(0);
+                            }
+                            if (latest.x >= x / 1.5 && !isBaking) {
                                 setIsBaking(true);
                             }
 
-                            if (latest.x >= (x - xPercent) || !isRunning) {
+                            if ((latest.x >= (x - xPercent) || !isRunning) && isBaking && isDoughComplete) {
                                 setIsDoughComplete(false);
                                 setIsBaking(false);
 
@@ -128,7 +135,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                                 });
                             }
 
-                            if (latest.x >= (x - xPercent)) {
+                            if (latest.x >= (x - xPercent) && !showScore && score !== (score + 1)) {
                                 setControls({
                                     score: score + 1
                                 });
