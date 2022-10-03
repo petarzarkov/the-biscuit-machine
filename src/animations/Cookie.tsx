@@ -6,7 +6,7 @@ import { GiCookie } from "react-icons/gi";
 
 export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ motionStyle, x }) => {
     const defaultX = 15;
-    const { isRunning, duration, isHeated, isPaused, setIsStamping } = useAnimationProvider();
+    const { isRunning, duration, isHeated, isPaused, setControls } = useAnimationProvider();
     const [isDoughComplete, setIsDoughComplete] = React.useState(false);
     const [pausedAt, setPausedAt] = React.useState(defaultX);
     const iconColor = useColorModeValue("primary.700", "primary.100");
@@ -53,7 +53,9 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             }
                             // Magic number 30, don't touch
                             if (latest.x >= (x / 3) - 30 && isRunning) {
-                                setIsStamping(true);
+                                setControls({
+                                    isStamping: true
+                                });
                             }
 
                             if (latest.x >= x / 3 && isRunning) {

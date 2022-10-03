@@ -8,18 +8,16 @@ export type AnimationProviderBase = Expand<{
     initialTemp: number;
     heatedTemp: number;
     explodeTemp: number;
+    isStamping: boolean;
+    isHeated: boolean;
+    isExploded: boolean;
 }>;
 
 export type AnimationContextState = Expand<AnimationProviderBase> & {
     setControls: (controls: Partial<AnimationProviderBase>) => void;
-    isHeated: boolean;
     temperature: number;
     setTemperature: (newTemperature: number) => void;
     toggleTemperature: (incremenet: number) => void;
-    isExploded: boolean;
-    setIsExploded: (isExploded: boolean) => void;
-    isStamping: boolean;
-    setIsStamping: (isStamping: boolean) => void;
 };
 
 export const AnimationContext = React.createContext<AnimationContextState | undefined>(
