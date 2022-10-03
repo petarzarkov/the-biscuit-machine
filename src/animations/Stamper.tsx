@@ -31,8 +31,11 @@ export const Stamper: React.FC<{ x: number }> = ({ x }) => {
                     }
                 }}
                 onUpdate={(latest) => {
-                    if (!isPaused) {
+                    if (!isPaused && isRunning) {
                         setPausedAt(latest.y as number);
+                    }
+                    if (latest.y as number >= 50 && isStamping) {
+                        setIsStamping(false);
                     }
                 }}
                 onAnimationComplete={() => {
