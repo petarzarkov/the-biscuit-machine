@@ -38,6 +38,14 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
         });
     }, []);
 
+    const calcDynamicDuration = (from: number, to: number) => {
+        const distance = to - from;
+        const ratio = to / duration;
+        const x = distance / ratio;
+        const newDuration = x * duration || duration;
+        return newDuration;
+    };
+
     return (
         <HStack>
             <AnimatePresence mode="wait">
@@ -56,7 +64,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             x: x / 2,
                             transition: {
                                 ease: "linear",
-                                duration,
+                                duration: calcDynamicDuration(pausedAt.one !== defaultX ? pausedAt.one : defaultX, x / 2),
                                 repeatDelay: 1,
                                 repeat: Infinity
                             }
@@ -106,7 +114,7 @@ export const Cookie: React.FC<{ motionStyle?: MotionStyle; x: number }> = ({ mot
                             rotate: 360,
                             transition: {
                                 ease: "linear",
-                                duration,
+                                duration: calcDynamicDuration(pausedAt.two !== x / 3 ? pausedAt.two : x / 3, x - xPercent),
                                 delay: 1,
                                 repeat: Infinity
                             }
