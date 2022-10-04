@@ -12,7 +12,7 @@ import { BaseModal } from "@components";
 export const BiscuitMachine: FC = () => {
     const elementRef = React.useRef(null);
     const dimensions = useSize(elementRef);
-    const { isRunning, setControls, isPaused, toggleTemperature, temperature, score, highScore, isExploded } = useAnimationProvider();
+    const { isRunning, setControls, isPaused, temperature, score, highScore, isExploded } = useAnimationProvider();
     const color = useColorModeValue("primary.900", "primary.300");
     const [showModal, setShowModal] = React.useState(false);
 
@@ -28,7 +28,6 @@ export const BiscuitMachine: FC = () => {
             ref={elementRef}
             width={[200, 460, 660]}
         >
-            {showModal &&
             <BaseModal
                 content={`Try not to reach ${temp.explodeTemp} degrees. Pausing will help you to reduce the oven's temperature.`}
                 title={`Game Over, score: ${score}`}
@@ -36,7 +35,6 @@ export const BiscuitMachine: FC = () => {
                 onClose={() => {
                     setShowModal(false);
                 }} />
-            }
             {temperature >= 250 && <Image
                 pos={"absolute"}
                 src={"images/itsHot.webp"}
@@ -74,7 +72,6 @@ export const BiscuitMachine: FC = () => {
                                     isRunning: true,
                                     isPaused: false
                                 });
-                                toggleTemperature(temperature >= temp.heatedTemp ? !isPaused ? 0.01 : -0.01 : 0.05);
                             }
                         }}
                         size="lg"
@@ -126,7 +123,7 @@ export const BiscuitMachine: FC = () => {
                 </ButtonGroup>
             </Box>
             <Box>
-                <Tag size={"sm"} key={"score"} variant='subtle' color={color}>
+                <Tag size={"sm"} key={"score"} variant='subtle' color={color} maxW={"50%"}>
                     <TagLabel>{`Score: ${score}`}</TagLabel>
                     <TagLeftIcon
                         as={GiCookie}
@@ -136,8 +133,8 @@ export const BiscuitMachine: FC = () => {
                         ml={1}
                     />
                 </Tag>
-                <Tag size={"sm"} key={"highScore"} variant='subtle' color={color} float={"right"} >
-                    <TagLabel>{`Highest: ${highScore}`}</TagLabel>
+                <Tag size={"sm"} key={"highScore"} variant='subtle' color={color} float={"right"} maxW={"50%"}>
+                    <TagLabel>{`High: ${highScore}`}</TagLabel>
                     <TagLeftIcon
                         as={GiCookie}
                         color={color}

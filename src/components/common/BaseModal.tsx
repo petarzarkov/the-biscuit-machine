@@ -7,18 +7,26 @@ export const BaseModal: FC<{ content: ReactElement | string; title: string; isOp
     const colorInverse = useColorModeValue("primary.300", "primary.900");
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={"inside"} motionPreset={"slideInRight"} size="xs">
+            <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                motionPreset={"slideInRight"}
+                size="xs"
+            >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader
                         backgroundColor={colorInverse}
-                    >{title}</ModalHeader>
+                        height={50}
+                    >
+                        {title}
+                    </ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody backgroundColor={color}>
+                    <ModalBody backgroundColor={color} color={colorInverse}>
                         {content}
                     </ModalBody>
 
-                    <ModalFooter backgroundColor={colorInverse}>
+                    <ModalFooter backgroundColor={colorInverse} h={50}>
                         <Button mr={3} onClick={onClose} color={color}>{"Close"}</Button>
                     </ModalFooter>
                 </ModalContent>
