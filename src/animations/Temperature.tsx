@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, useColorModeValue, HStack, Tag, TagLabel, TagRightIcon } from "@chakra-ui/react";
+import { Icon, useColorModeValue, HStack, Tag, TagLabel, TagRightIcon, CircularProgress } from "@chakra-ui/react";
 import { useAnimationProvider, useIteration } from "@hooks";
 import { TbTemperatureCelsius } from "react-icons/tb";
 import { FaTemperatureHigh, FaTemperatureLow } from "react-icons/fa";
@@ -106,6 +106,7 @@ export const Temperature: React.FC = () => {
                     m={0}
                 />
             </Tag>
+            <CircularProgress value={iteration} size={5} color={color} min={temp.initialTemp} max={temp.explodeTemp}/>
         </HStack>
     );
 };

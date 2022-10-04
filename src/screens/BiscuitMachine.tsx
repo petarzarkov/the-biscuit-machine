@@ -28,7 +28,6 @@ export const BiscuitMachine: FC = () => {
             ref={elementRef}
             width={[200, 460, 660]}
         >
-            {showModal &&
             <BaseModal
                 content={`Try not to reach ${temp.explodeTemp} degrees. Pausing will help you to reduce the oven's temperature.`}
                 title={`Game Over, score: ${score}`}
@@ -36,7 +35,6 @@ export const BiscuitMachine: FC = () => {
                 onClose={() => {
                     setShowModal(false);
                 }} />
-            }
             {temperature >= 250 && <Image
                 pos={"absolute"}
                 src={"images/itsHot.webp"}
