@@ -98,7 +98,7 @@ export const Temperature: React.FC = () => {
                 m={0}
             />
             <Tag size={"md"} key={"temperatureDisplay"} variant='outline' color={color}>
-                <TagLabel>{Math.round(iteration)}</TagLabel>
+                <TagLabel minW={7}>{Math.round(iteration)}</TagLabel>
                 <TagRightIcon
                     as={TbTemperatureCelsius}
                     color={color}
@@ -106,7 +106,7 @@ export const Temperature: React.FC = () => {
                     m={0}
                 />
             </Tag>
-            <CircularProgress value={iteration} size={5} color={color} min={temp.initialTemp} max={temp.explodeTemp}/>
+            <CircularProgress m={0} p={0} value={iteration} size={5} color={color} min={temp.initialTemp} max={temp.explodeTemp}/>
         </HStack>
     );
 };
