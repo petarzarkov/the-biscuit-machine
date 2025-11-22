@@ -13,6 +13,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
+    "build:watch": "tsc && vite build -w",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint -c .eslintrc.js --ext .ts,.tsx ./src --max-warnings 0",
     "lint:fix": "npm run lint -- --fix"
